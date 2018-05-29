@@ -124,7 +124,7 @@
         "no-catch-shadow": "error",
         "no-shadow-restricted-names": "error",
         "prefer-promise-reject-errors": "error",
-        "require-await": "error",
+        "require-await": "warn",
         "no-warning-comments": ["off", { "terms": ["todo", "fixme", "xxx"], "location": "start" }],
         "no-unused-vars": ["warn", { "vars": "all", "args": "after-used" }],
         "comma-dangle": ["error", "never"],
