@@ -1,3 +1,5 @@
+// This event executes when a new guild (server) is joined.
+
 module.exports = (client, guild) => {
-  client.log('Log', `I have been added to the guild: ${guild.name}, Owned by: ${guild.owner.user.tag}, with ${guild.memberCount} members.`)
+  client.logger.cmd(`[GUILD JOIN] ${guild.name} (${guild.id}) added the bot. Owner: ${guild.owner.user.tag} (${guild.owner.user.id})`)
 }

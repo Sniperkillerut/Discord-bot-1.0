@@ -9,17 +9,17 @@ module.exports = (client, oldMember, newMember) => {
       //let botrole = guild.roles.find('name', config.name)
       //client.log(`bot role position: ${botrole.position}`)
       guild.createRole({
-        name        : `Playing ${game_new.name}`
-        , color       : color
-        , mentionable : true
-        , hoist       : true
+        name        : `Playing ${game_new.name}`,
+        color       : color,
+        mentionable : true,
+        hoist       : true
         //position: botrole.position-2
       })
         .then(role => {
           client.log(`Created new role with name ${role.name} and color ${role.color}`)
           newMember.addRole(role).then(() => {
             const role2 = guild.roles.find('name', `Playing ${game_new.name}`)
-            client.log('log', `role created, adding person ${newMember.user.username} to list, currently ${role2.members.size} members of said role`)
+            client.logger.cmd(`[AUTO-ROLE CREATED] adding person ${newMember.user.username} to role ${role2}, currently ${role2.members.size} members of said role.`)
           })
 
         })
@@ -28,7 +28,7 @@ module.exports = (client, oldMember, newMember) => {
     else {
       newMember.addRole(playRole).then(() => {
         const role = guild.roles.find('name', `Playing ${game_new.name}`)
-        client.log('log', `role already existed, adding person ${newMember.user.username} to list, currently ${role.members.size} members of said role`)
+        client.logger.cmd(`[AUTO-ROLE SET] adding person ${newMember.user.username} to role ${role}, currently ${role.members.size} members of said role.`)
       })
     }
   }
@@ -37,9 +37,9 @@ module.exports = (client, oldMember, newMember) => {
     if (playRole && newMember.roles.has(playRole.id)) {
       newMember.removeRole(playRole).then(() => {
         const role = guild.roles.find('name', `Playing ${game_old.name}`)
-        client.log('log', `role already existed, removing person ${newMember.user.username} from list, currently ${role.members.size} members of said role`)
+        client.logger.cmd(`[AUTO-ROLE UNSET] removing person ${newMember.user.username} from role ${role}, currently ${role.members.size} members of said role.`)
         if (role.members.size === 0) {
-          client.log('log', `role ${role.name} deleted`)
+          client.logger.cmd(`[AUTO-ROLE DELETE] role ${role} is currently empty, deleting said role.`)
           role.delete()
         }
       })
