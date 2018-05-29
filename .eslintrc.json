@@ -87,7 +87,7 @@
         ],
         "comma-style": [
             "error",
-            "first"
+            "last"
         ],
         "no-duplicate-imports": [
             "error",
@@ -97,11 +97,10 @@
         ],
         "no-var": "warn",
         "prefer-const": [
-            "error",
-            {
-                "destructuring": "any",
-                "ignoreReadBeforeAssign": false
-            }
+        "error", {
+            "destructuring": "any",
+            "ignoreReadBeforeAssign": false
+        }
         ],
         "no-confusing-arrow": "error",
         "no-unneeded-ternary": "error",
