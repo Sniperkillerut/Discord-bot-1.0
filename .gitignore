@@ -1,6 +1,4 @@
 # Created by https://www.gitignore.io/api/node
-config.json
-auth.js
 .vscode
 static/
 static
@@ -8,13 +6,18 @@ client/static
 client/static/
 client/static/**
 uploads/**
+auth.js
 jsconfig.json
+config.json
+
 ### Node ###
 # Logs
 logs
-*.lo
+*.log
 npm-debug.log*
 awesome_log
+yarn-debug.log*
+yarn-error.log*
 
 # Runtime data
 pids
@@ -44,8 +47,26 @@ build/Release
 node_modules
 jspm_packages
 
+# Typescript v1 declaration files
+typings/
+
 # Optional npm cache directory
 .npm
 
 # Optional REPL history
 .node_repl_history
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# dotenv environment variables file
+.env

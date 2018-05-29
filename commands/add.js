@@ -1,5 +1,5 @@
 module.exports = (client, message, args) => {
-    let numArray = args.map(n => parseInt(n))
-    let total = numArray.reduce((p, c) => p + c)
-    return msg.channel.send(total)
+  const num_array = args.map(n => parseInt(n))
+  const total = num_array.reduce((p, c) => p + c)
+  return message.channel.send(total)
 }

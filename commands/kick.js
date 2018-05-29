@@ -1,19 +1,19 @@
 module.exports = (client, message, args) => {
-    let modRole = message.guild.roles.find('name', 'staff')
-    if (!message.member.roles.has(modRole.id)) {
-        return message.reply('You must be staff t use this command')
-    }
-    if (message.mentions.users.size === 0) {
-        return message.reply('you must mention a user to kick')
-    }
-    let kickMember = message.guild.member(msg.mentions.users.first())
-    if (!kickMember) {
-        return message.reply('invalid user')
-    }
-    if (message.guild.member(client.user).hasPermission('KICK_MEMBERS')) {
-        return message.reply('I dont have kick permissions on this server')
-    }
-    kickMember.kick().then(member => {
-        message.reply(`User ${member.user.username} succefully kicked`)
-    }).catch(console.error)
-};
+  const mod_role = message.guild.roles.find('name', 'staff')
+  if (!message.member.roles.has(mod_role.id)) {
+    return message.reply('You must be staff t use this command')
+  }
+  if (message.mentions.users.size === 0) {
+    return message.reply('you must mention a user to kick')
+  }
+  const kick_member = message.guild.member(message.mentions.users.first())
+  if (!kick_member) {
+    return message.reply('invalid user')
+  }
+  if (message.guild.member(client.user).hasPermission('KICK_MEMBERS')) {
+    return message.reply('I dont have kick permissions on this server')
+  }
+  kick_member.kick().then(member => {
+    message.reply(`User ${member.user.username} succefully kicked`)
+  }).catch(console.error)
+}
