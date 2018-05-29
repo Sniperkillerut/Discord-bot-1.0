@@ -96,7 +96,13 @@
             }
         ],
         "no-var": "warn",
-        "prefer-const": "warn",
+        "prefer-const": [
+            "error",
+            {
+                "destructuring": "any",
+                "ignoreReadBeforeAssign": false
+            }
+        ],
         "no-confusing-arrow": "error",
         "no-unneeded-ternary": "error",
         "no-trailing-spaces": "error",
