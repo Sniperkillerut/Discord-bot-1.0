@@ -67,7 +67,7 @@ exports.run = async (client, message, [action, key, ...value], level) => { // es
   if (action === 'get') {
     if (!key) {return message.reply('Please specify a key to view')}
     if (!settings[key]) {return message.reply('This key does not exist in the settings')}
-    const isDefault = !overrides[key] ? '\nThis is the default global default value.' : ''
+    const isDefault = !overrides[key] ? '\nThis is the default global default value.' : `\n the default value is: ${overrides[key]}`
     message.reply(`The value of ${key} is currently ${settings[key]}${isDefault}`)
   }
   else {
