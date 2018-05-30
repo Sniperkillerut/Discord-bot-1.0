@@ -11,7 +11,10 @@ exports.run = (client, message, args, level) => { // eslint-disable-line no-unus
 • Servers    :: ${client.guilds.size.toLocaleString()}
 • Channels   :: ${client.channels.size.toLocaleString()}
 • Discord.js :: v${version}
-• Node       :: ${process.version}`, { code: 'asciidoc' })
+• Node       :: ${process.version}
+• Commands   :: ${client.commands.size}
+`, { code: 'asciidoc' })
+
 }
 
 exports.conf = {

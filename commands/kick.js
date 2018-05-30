@@ -1,4 +1,4 @@
-module.exports = (client, message, args) => {
+exports.run = (client, message, args) => {
   const mod_role = message.guild.roles.find('name', 'staff')
   if (!message.member.roles.has(mod_role.id)) {
     return message.reply('You must be staff t use this command')
@@ -16,4 +16,18 @@ module.exports = (client, message, args) => {
   kick_member.kick().then(member => {
     message.reply(`User ${member.user.username} succefully kicked`)
   }).catch(console.error)
+}
+
+exports.conf = {
+  enabled   : true,
+  guildOnly : false,
+  aliases   : [],
+  permLevel : 'Moderator'
+}
+
+exports.help = {
+  name        : 'kick',
+  category    : 'Miscelaneous',
+  description : 'Kicks the mentioned user',
+  usage       : 'kick <mention>'
 }

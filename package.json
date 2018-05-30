@@ -19,6 +19,7 @@
     "enmap-level": "^2.1.0",
     "moment": "^2.22.1",
     "moment-duration-format": "^2.2.2",
+    "snekfetch": "^4.0.0",
     "uws": "^10.148.0"
   },
   "devDependencies": {
