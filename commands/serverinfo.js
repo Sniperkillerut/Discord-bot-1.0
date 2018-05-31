@@ -20,7 +20,7 @@ exports.conf = {
 
 exports.help = {
   name        : 'serverinfo',
-  category    : 'Miscelaneous',
+  category    : 'Info',
   description : 'Shows this server information',
   usage       : 'serverinfo'
 }

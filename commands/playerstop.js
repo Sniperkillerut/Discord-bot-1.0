@@ -103,6 +103,6 @@ exports.conf = {
 exports.help = {
   name        : 'playerstop',
   category    : 'timer',
-  description : 'It... like... pings. Then Pongs. And it"s not Ping Pong.',
+  description : 'Players total time played',
   usage       : 'playerstop'
 }

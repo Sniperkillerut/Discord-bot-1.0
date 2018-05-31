@@ -14,7 +14,6 @@ exports.run = (client, message, args, level) => { // eslint-disable-line no-unus
 • Node       :: ${process.version}
 • Commands   :: ${client.commands.size}
 `, { code: 'asciidoc' })
-
 }
 
 exports.conf = {
@@ -26,7 +25,7 @@ exports.conf = {
 
 exports.help = {
   name        : 'stats',
-  category    : 'Miscelaneous',
+  category    : 'Info',
   description : 'Gives some useful bot statistics',
   usage       : 'stats'
 }
