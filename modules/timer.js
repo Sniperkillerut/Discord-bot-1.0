@@ -91,12 +91,9 @@ module.exports = (client) => {
 
   client.convertSince = (since) => {
     const num = Number(since.substring(0, since.length - 1))
-    if (num > 1) {
-      suffix += 's'
-    }
-
     let suffix
     let prefix
+
     if (since.endsWith('m')) {
       suffix = 'minute'
       prefix = 'In'
@@ -116,7 +113,9 @@ module.exports = (client) => {
     if (since === 'today') {
       return 'Today'
     }
-
+    if (num > 1) {
+      suffix += 's'
+    }
     return `${prefix} the last ${num} ${suffix}`
 
   }
@@ -252,7 +251,7 @@ module.exports = (client) => {
     function topUsers(user, id) {
       if (user.bot) { return }
       if (fs.existsSync(`./data/userdata/${id}.csv`) === true && client.privateCheck(id) === false) {
-        return { id: id, minutes: client.timePlayed(id, client.settings.defaultGame, since) }
+        return { id: id, minutes: client.timePlayed(id, client.getGuildSettings(guildID).defaultGame, since) }
       }
 
       return undefined
@@ -353,7 +352,7 @@ module.exports = (client) => {
     fs.writeFileSync(`./data/cache/${guild.id}/daily.json`, JSON.stringify(topListDay))
     fs.writeFileSync(`./data/cache/${guild.id}/always.json`, JSON.stringify(topListAll))
     fs.writeFileSync(`./data/cache/${guild.id}/date.txt`, Date())
-    return `*${guild.name}'s* \`${client.settings.defaultGame}\` leaderboard:\n${leaderboardString('WEEKLY', '7d')}\n${leaderboardString('DAILY', 'today')}\n${leaderboardString('ALL')}\n**------------------------------------------------**\nLast updated at: \`${Date().toString()}\`\nJoined guild at: \`${guild.joinedAt}\``
+    return `*${guild.name}'s* \`${client.getGuildSettings(guild).defaultGame}\` leaderboard:\n${leaderboardString('WEEKLY', '7d')}\n${leaderboardString('DAILY', 'today')}\n${leaderboardString('ALL')}\n**------------------------------------------------**\nLast updated at: \`${Date().toString()}\`\nJoined guild at: \`${guild.joinedAt}\``
   }
 
   client.updateRankingChannel = () => {
@@ -377,7 +376,7 @@ module.exports = (client) => {
             if (message === undefined) {
               client.purge(50, rankingChannel).catch(err => { console.log('Error purging rankingChannel!\n' + err) })
               console.log(`${Date()}: Calculating ${guild.name} leaderboard...`)
-              rankingChannel.send(client.getLeaderboardString(guild, client.getGuildSettings(message.guild)))
+              rankingChannel.send(client.getLeaderboardString(guild, client.getGuildSettings(guild)))
               console.log(`${Date()}: ${guild.name}: Leaderboard sent!`)
             }
             else {

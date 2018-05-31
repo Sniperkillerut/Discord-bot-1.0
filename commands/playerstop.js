@@ -1,81 +1,96 @@
-const Discord = require('discord.js')
 const fs = require('fs')
 
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
-  if (!message.mentions.users.first()) {
-    const timePlayedWeek = client.timePlayed(message.author.id, message.settings.defaultGame, '7d')
-    const timePlayedDay = client.timePlayed(message.author.id, message.settings.defaultGame, 'today')
-    const timePlayedAll = client.timePlayed(message.author.id, message.settings.defaultGame)
-    if (args[0]) {
-      return message.reply(`Please mention someone to view their personal leaderboard\n*e.a.: ${message.settings.prefix}playersTop @xVaql*`)
-    }
-    if (timePlayedAll === 0) {
-      return message.reply(`You haven't (according to Discord) ever played ${message.settings.defaultGame} since I measured your playtime, so there's nothing to show you!\n*(playtime measured since: \`${fs.readFileSync(`./data/startDates/${message.author.id}.txt`)}\`)*`)
-    }
-    const placeWeek = client.getTopList('7d', message.guild.id).map(topListWeek => topListWeek.id).indexOf(message.author.id) + 1
-    const placeDay = client.getTopList('today', message.guild.id).map(topListDay => topListDay.id).indexOf(message.author.id) + 1
-    const placeAll = client.getTopList('', message.guild.id).map(topListAll => topListAll.id).indexOf(message.author.id) + 1
-    const embed = new Discord.RichEmbed()
-      .setAuthor('Your personal leaderboard', message.author.avatarURL)
-      .setColor(0x00AE86)
-      .setFooter(`Leaderboard updated at: ${fs.readFileSync(`./data/cache/${message.guild.id}/date.txt`)}`)
-      .setThumbnail(client.getThumbnail(message.settings.defaultGame))
-    if (message.settings.rankingChannel !== 'none') {
-      embed.setDescription(`Check the top ${message.settings.leaderboardAmount} users in the ${message.settings.rankingChannel} channel`)
-    }
-    if (client.timePlayed(message.author.id, message.settings.defaultGame, '7d') === 0) {
-      embed.addField('Weekly', `You haven't played ${message.settings.defaultGame} this week!`)
-    }
-    else {
-      embed.addField('Weekly', `In the week list you are ranked: **${client.ordinalSuffix(placeWeek)}** *(${client.timeConvert(timePlayedWeek)})*`)
-    }
-    if (client.timePlayed(message.author.id, message.settings.defaultGame, 'today') === 0) {
-      embed.addField('Daily', `You haven't played ${message.settings.defaultGame} today!`)
-    }
-    else {
-      embed.addField('Daily', `In the day list you are ranked: **${client.ordinalSuffix(placeDay)}** *(${client.timeConvert(timePlayedDay)})*`)
-    }
-    embed.addField('Total', `In the total list you are ranked: **${client.ordinalSuffix(placeAll)}** *(${client.timeConvert(timePlayedAll)})*`)
-    message.channel.send({ embed })
-  }
-  else {
+  let user
+  let string
+  let since
+  let sinceWarning = false
+  if (message.mentions.users.first()) {
     if (message.mentions.users.first().bot) {
       return message.reply('Sorry, I don\'t log the playtime of bots!')
     }
-    if (client.timePlayed(message.mentions.users.first().id, message.settings.defaultGame) === 0) {
-      return message.reply(`${message.mentions.users.first().username} hasn't (according to Discord) ever played ${message.settings.defaultGame} since I measured his playtime!\n*(playtime measured since: \`${fs.readFileSync(`./data/startDates/${message.mentions.users.first().id}.txt`)}\`)*`)
+    if (fs.existsSync(`./data/userdata/${message.mentions.users.first().id}.csv`) === false) {
+      return message.reply(`*${message.mentions.users.first().username}* hasn't (according to Discord) ever played a game since I measured your playtime!\n*(playtime measured since: \`${fs.readFileSync(`./data/startDates/${message.mentions.users.first().id}.txt`)}\`)*`)
     }
-
-    const timePlayedWeek = client.timePlayed(message.mentions.users.first().id, message.settings.defaultGame, '7d')
-    const timePlayedDay = client.timePlayed(message.mentions.users.first().id, message.settings.defaultGame, 'today')
-    const timePlayedAll = client.timePlayed(message.mentions.users.first().id, message.settings.defaultGame)
-
-    const placeWeek = client.getTopList('7d', message.guild.id).map(topListWeek => topListWeek.id).indexOf(message.mentions.users.first().id) + 1
-    const placeDay = client.getTopList('today', message.guild.id).map(topListDay => topListDay.id).indexOf(message.mentions.users.first().id) + 1
-    const placeAll = client.getTopList('', message.guild.id).map(topListAll => topListAll.id).indexOf(message.mentions.users.first().id) + 1
-    const embed = new Discord.RichEmbed()
-      .setAuthor(`${message.mentions.users.first().username}'s personal leaderboard`, message.mentions.users.first().avatarURL)
-      .setColor(0x00AE86)
-      .setFooter(`Leaderboard updated at: ${fs.readFileSync(`./data/cache/${message.guild.id}/date.txt`)}`)
-      .setThumbnail(client.getThumbnail(message.settings.defaultGame))
-    if (message.settings.rankingChannel !== 'none') {
-      embed.setDescription(`Check the top ${message.settings.leaderboardAmount} users in the ${message.settings.rankingChannel} channel`)
+    user = message.mentions.users.first()
+    if (args[1]) {
+      since=args[1]
     }
-    if (client.timePlayed(message.mentions.users.first().id, message.settings.defaultGame, '7d') === 0) {
-      embed.addField('Weekly', `${message.mentions.users.first().username} hasn't played ${message.settings.defaultGame} this week!`)
+    if (since) {
+      string = `\n${client.convertSince(since)}, **${message.mentions.users.first().username}'s most played games are:**\n`
     }
     else {
-      embed.addField('Weekly', `In the week list ${message.mentions.users.first().username} is ranked: **${client.ordinalSuffix(placeWeek)}** *(${client.timeConvert(timePlayedWeek)})*`)
+      string = `\n**${message.mentions.users.first().username}'s most played games are:**\n`
     }
-    if (client.timePlayed(message.mentions.users.first().id, message.settings.defaultGame, 'today') === 0) {
-      embed.addField('Daily', `${message.mentions.users.first().username} hasn't played ${message.settings.defaultGame} today!`)
+    if (since && client.sinceDate(since) < new Date(fs.readFileSync(`./data/startDates/${message.mentions.users.first().id}.txt`))) {
+      sinceWarning = true
     }
-    else {
-      embed.addField('Daily', `In the day list ${message.mentions.users.first().username} is ranked: **${client.ordinalSuffix(placeDay)}** *(${client.timeConvert(timePlayedDay)})*`)
-    }
-    embed.addField('Total', `In the total list ${message.mentions.users.first().username} is ranked: **${client.ordinalSuffix(placeAll)}** *(${client.timeConvert(timePlayedAll)})*`)
-    message.channel.send({ embed })
   }
+  else {
+    if (fs.existsSync(`./data/userdata/${message.author.id}.csv`) === false) {
+      return message.reply(`You haven't (according to Discord) ever played a game since I measured your playtime!\n*(playtime measured since: \`${fs.readFileSync(`./data/startDates/${message.author.id}.txt`)}\`)*`)
+    }
+    user = message.author
+    if (args[0]) {
+      since = args[0]
+    }
+    if (since) {
+      string = `\n**${client.convertSince(since)}, your most played games are:**\n`
+    }
+    else {
+      string = '\n**Your most played games are:**\n'
+    }
+    if (since && client.sinceDate(since) < new Date(fs.readFileSync(`./data/startDates/${message.author.id}.txt`))) {
+      sinceWarning = true
+    }
+  }
+
+  // Get an array of objects of the games the user was playing
+  const games = []
+  function pushObject(value) {
+    let found = false
+    const game = value.split(' gamePlaying: ')[1]
+    const date = value.split(' gamePlaying: ')[0]
+    if (game === undefined) {
+      return
+    }
+    if (since && client.sinceDate(since) > new Date(date)) {
+      return
+    }
+    for (let i = 0; i < games.length; i++) {
+      if (games[i].game === game) {
+        found = true
+        games[i].time += 1
+        break
+      }
+    }
+    if (found === false) {
+      games.push({ game: game, time: 1 })
+    }
+  }
+  fs.readFileSync(`./data/userdata/${user.id}.csv`).toString().split('\n').forEach(pushObject)
+  // Sort the list by playtime
+  games.sort(function (a, b) { return b.time - a.time })
+  // Make a string of it
+  for (let i = 0; i < 10; i++) {
+    if (i === 0 && games[i] === undefined) {
+      string += '**You haven\'t played any game in that time period!**'
+      break
+    }
+    if (games[i]) {
+      string += `**${i + 1}. ${games[i].game}**: *${client.timeConvert(games[i].time)}*\n`
+    }
+  }
+
+  if (sinceWarning === true) {
+    if (message.mentions.users.first()) {
+      string += `\n**Warning**: this information is inaccurate, because I started measuring ${message.mentions.users.first().username}'s playtime later than the time you specified.\n(measuring started ${client.MSDays(Math.abs(new Date() - new Date(fs.readFileSync(`./data/startDates/${message.mentions.users.first().id}.txt`))))} days ago)`
+    }
+    else {
+      string += `\n**Warning**: this information is inaccurate, because I started measuring your playtime later than the time you specified.\n(measuring started ${client.MSDays(Math.abs(new Date() - new Date(fs.readFileSync(`./data/startDates/${message.author.id}.txt`))))} days ago)`
+    }
+  }
+  return message.reply(string)
 }
 
 exports.conf = {
@@ -87,7 +102,7 @@ exports.conf = {
 
 exports.help = {
   name        : 'playerstop',
-  category    : 'Timer',
-  description : 'Players Ranking',
+  category    : 'timer',
+  description : 'It... like... pings. Then Pongs. And it"s not Ping Pong.',
   usage       : 'playerstop'
 }

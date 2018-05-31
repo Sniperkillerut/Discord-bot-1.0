@@ -6,17 +6,17 @@ module.exports = (client, oldMember, newMember) => {
     const playRole = guild.roles.find('name', `In ${game_new.name}`)
     if (!playRole) {
       const color = '#' + Math.floor(Math.random() * 16777215).toString(16)
-      const botrole = guild.roles.find('name', client.config.name)
-      client.log(`bot role position: ${botrole.position}`)
+      //const botrole = guild.roles.find('name', client.config.name)
+      //client.logger.log(`[AUTO-ROLE CREATED] bot role position: ${botrole.position}`)
       guild.createRole({
         name        : `In ${game_new.name}`,
         color       : color,
         mentionable : true,
         hoist       : true,
-        position    : botrole.position-2
+        position    : 2
       })
         .then(role => {
-          client.log(`Created new role with name ${role.name} and color ${role.color}`)
+          client.logger.log(`[AUTO-ROLE CREATED] Created new role with name ${role.name} and color ${role.color}`)
           newMember.addRole(role).then(() => {
             const role2 = guild.roles.find('name', `In ${game_new.name}`)
             client.logger.cmd(`[AUTO-ROLE CREATED] adding person ${newMember.user.username} to role ${role2.name}, currently ${role2.members.size} members of said role.`)
