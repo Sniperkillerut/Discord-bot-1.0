@@ -377,12 +377,12 @@ module.exports = (client) => {
             if (message === undefined) {
               client.purge(50, rankingChannel).catch(err => { console.log('Error purging rankingChannel!\n' + err) })
               console.log(`${Date()}: Calculating ${guild.name} leaderboard...`)
-              rankingChannel.send(client.getLeaderboardString(guild, client.settings))
+              rankingChannel.send(client.getLeaderboardString(guild, client.getGuildSettings(message.guild)))
               console.log(`${Date()}: ${guild.name}: Leaderboard sent!`)
             }
             else {
               console.log(`${Date()}: Calculating ${guild.name} leaderboard...`)
-              message.edit(client.getLeaderboardString(guild, client.settings))
+              message.edit(client.getLeaderboardString(guild, client.getGuildSettings(message.guild)))
               client.purge(50, rankingChannel).catch(err => { console.log('Error purging rankingChannel!\n' + err) })
               console.log(`${Date()}: ${guild.name}: Leaderboard updated!`)
             }
