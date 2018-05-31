@@ -43,7 +43,7 @@
         "no-invalid-this": "warn",
         "no-floating-decimal": "error",
         "no-lone-blocks": "error",
-        "no-magic-numbers": ["warn", { "ignore": [0,1], "ignoreArrayIndexes": true}],
+        "no-magic-numbers": ["off", { "ignore": [0,1], "ignoreArrayIndexes": true}],
         "no-multi-spaces": [
             "warn",
             { "ignoreEOLComments": true,

@@ -1,12 +1,11 @@
 const snekfetch = require('snekfetch')
-const Discord = require('discord.js')
 
 exports.run = (client, message, args, level) => {
   let [fromSym, toSym] = args.filter((a) => a.indexOf('<@') < 0)
 
-  if (fromSym == '' || fromSym == undefined || toSym == '' || toSym == undefined) {return message.reply('You must specify a from and to symbol. (e.g. cryptocurrency ETH USD)')}
+  if (fromSym === '' || fromSym === undefined || toSym === '' || toSym === undefined) {return message.reply('You must specify a from and to symbol. (e.g. cryptocurrency ETH USD)')}
 
-  if (toSym == undefined && fromSym.indexOf('/') > -1) {
+  if (toSym === undefined && fromSym.indexOf('/') > -1) {
     const parts = fromSym.split('/')
     fromSym = parts[0]
     toSym = parts[1]

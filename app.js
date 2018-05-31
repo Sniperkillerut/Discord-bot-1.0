@@ -20,6 +20,7 @@ client.logger = require('./util/Logger')
 // Let's start by getting some useful functions that we'll use throughout
 // the bot, like logs and elevation features.
 require('./modules/functions.js')(client)
+require('./modules/timer.js')(client)
 
 // Aliases and commands are put in collections where they can be read from,
 // catalogued, listed, etc.
@@ -69,6 +70,7 @@ const init = async () => {
   client.login(client.config.token)
 
   // End top-level async/await function.
+
 }
 
 init()

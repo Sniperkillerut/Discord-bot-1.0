@@ -1,5 +1,5 @@
 exports.run = async (client, message, args, level) => { // eslint-disable-line no-unused-vars
-  const emojiList = message.guild.emojis.map(e => e.toString()).join(' ')
+  const emojiList = await message.guild.emojis.map(e => e.toString()).join(' ')
   message.channel.send(emojiList)
 }
 
