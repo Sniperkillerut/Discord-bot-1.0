@@ -9,6 +9,7 @@ uploads/**
 auth.js
 jsconfig.json
 config.json
+config.js
 data/
 
 ### Node ###
