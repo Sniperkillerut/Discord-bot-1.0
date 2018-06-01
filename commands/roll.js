@@ -15,7 +15,7 @@ exports.conf = {
 
 exports.help = {
   name        : 'roll',
-  category    : 'Miscellaneous',
+  category    : 'Miscelaneous',
   description : 'Rolls a dice of n sides.',
   usage       : 'roll <n>'
 }
