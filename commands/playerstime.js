@@ -85,7 +85,7 @@ exports.conf = {
 
 exports.help = {
   name        : 'playerstime',
-  category    : 'Miscelaneous',
+  category    : 'Timer',
   description : 'players time played',
   usage       : 'playerstime'
 }

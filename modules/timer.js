@@ -357,7 +357,7 @@ module.exports = (client) => {
 
   client.updateRankingChannel = () => {
     client.guilds.forEach(function (guild) {
-      const rankingChannelID = client.config.defaultSettings.rankingChannel.replace('<#', '').replace('>', '')
+      const rankingChannelID = client.getGuildSettings(guild).rankingChannel.replace('<#', '').replace('>', '')
       const rankingChannel = guild.channels.find('id', rankingChannelID)
       if (rankingChannel) {
         // Permission check
