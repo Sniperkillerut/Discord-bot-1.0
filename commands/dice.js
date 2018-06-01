@@ -24,8 +24,9 @@ exports.help = {
   usage       : 'dice [sides]'
 }
 
-//TODO:
-// 1 - Make sure I'm not breaking anything
-// 2 - Change format of returned text to provide more information
-//    - richEmbed?
-//    - Same message.channel.send with more information?
+/*TODO:
+    1 - Make sure I'm not breaking anything
+    2 - Change format of returned text to provide more information
+    - richEmbed?
+    - Same message.channel.send with more information?
+*/

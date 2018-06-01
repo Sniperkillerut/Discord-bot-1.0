@@ -6,7 +6,7 @@ module.exports = async client => {
   client.user.setActivity(`${client.config.defaultSettings.prefix}help`, { type: 'PLAYING' })
 
 
-  setInterval(client.checkUsers, 30000)
-  setInterval(client.updateRankingChannel, 30000)
+  setInterval(client.checkUsers, 60000)
+  setInterval(client.updateRankingChannel, 600000)
   client.updateRankingChannel()
 }

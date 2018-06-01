@@ -26,4 +26,3 @@ exports.help = {
   description : 'Some Bot information',
   usage       : 'botinfo'
 }
-//TODO: Change Link

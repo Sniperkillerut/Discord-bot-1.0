@@ -14,7 +14,7 @@ const client = new Discord.Client()
 
 client.config = require('./config.js')
 // Require our logger
-client.logger = require('./util/Logger')
+client.logger = require('./util/logger.js')
 //client.log = require('./functions/log.js')
 
 // Let's start by getting some useful functions that we'll use throughout
