@@ -87,7 +87,7 @@ exports.conf = {
 
 exports.help = {
   name        : 'playerslead',
-  category    : 'Timer',
+  category    : 'timer',
   description : 'Player Personal leaderboard',
   usage       : 'playerslead'
 }
