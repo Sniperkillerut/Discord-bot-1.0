@@ -11,6 +11,7 @@ jsconfig.json
 config.json
 config.js
 data/
+src/config.js
 
 ### Node ###
 # Logs
