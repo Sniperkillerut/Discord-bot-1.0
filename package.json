@@ -18,7 +18,7 @@
     "discord.js": "^11.3.2",
     "enmap": "^2.5.2",
     "enmap-level": "^2.1.0",
-    "moment": "^2.22.1",
+    "moment": "^2.29.4",
     "moment-duration-format": "^2.2.2",
     "snekfetch": "^4.0.0",
     "uws": "^10.148.0",
